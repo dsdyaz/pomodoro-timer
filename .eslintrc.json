@@ -8,6 +8,7 @@
         "jsx-a11y",
         "prettier"
       ],
+      "env": {"browser" : true},
       "rules": {
         "semi": 0,
         "react/jsx-filename-extension": [
