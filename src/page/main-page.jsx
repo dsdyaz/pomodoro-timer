@@ -4,7 +4,10 @@ import Button from "../components/button/button"
 export default function Homepage() {
   return (
     <div>
-      <Button />
+      <Button text="thats button" />
+      <Button text="secondary" secondary />
+      <Button text="thats button" />
+      <Button text="secondary" secondary />
     </div>
   )
 }
