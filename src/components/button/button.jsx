@@ -2,6 +2,14 @@ import React from "react"
 import "./button.css"
 import propTypes from "prop-types"
 
+/**
+ * Button component
+ * @param secondary - bool, if true changes button styles to secondary variant
+ * @param classes - string, additional classes if needed
+ * @param text - string, text content of button
+ * @param onClickFunc - function that will be performed onClick if passed
+ * @returns node, Button component
+ */
 export default function Button(props) {
   const { secondary, classes, text, onClickFunc } = props
 
