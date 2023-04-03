@@ -1,19 +1,26 @@
-import { DateTime } from "luxon"
-import React from "react"
+import React, { useState } from "react"
+import { format } from "fecha"
 import Button from "../../components/button/button"
+import Timer from "../../components/timer/timer"
 
 export default function TimerHandler() {
-  let now
-
-  const nowTime = () => {
-    now = DateTime.now().toISO()
-    console.log(now)
-    const nowPlus = DateTime.now().plus({ minutes: 15 }).toISO()
-    console.log(nowPlus)
+  const [time, setTime] = useState("00:00")
+  const counter = () => {
+    const start = Date.now()
+    const endTime = new Date(start + 20 * 60000)
+    const count = () =>
+      setInterval(() => {
+        const nowTime = Date.now()
+        const counted = format(endTime - nowTime, "m:ss")
+        setTime(counted)
+      }, 1000)
+    count()
   }
+
   return (
     <div>
-      <Button text="timeeeee" onClickFunc={() => nowTime()} />
+      <Timer time={time} />
+      <Button text="eeeeee" onClickFunc={() => counter()} />
     </div>
   )
 }
