@@ -11,7 +11,7 @@ export default function TimerHandler() {
     const count = () =>
       setInterval(() => {
         const nowTime = Date.now()
-        const counted = format(endTime - nowTime, "m:ss")
+        const counted = format(endTime - nowTime, "mm:ss")
         setTime(counted)
       }, 1000)
     count()
