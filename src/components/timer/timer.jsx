@@ -3,12 +3,10 @@ import propTypes from "prop-types"
 import "./timer.css"
 
 export default function Timer(props) {
-  const { minutes, seconds, isGreen } = props
+  const { time, isGreen } = props
 
   Timer.propTypes = {
-    minutes: propTypes.string.isRequired,
-
-    seconds: propTypes.string.isRequired,
+    time: propTypes.string.isRequired,
 
     isGreen: propTypes.bool,
   }
@@ -19,7 +17,7 @@ export default function Timer(props) {
   const classes = isGreen ? "timer timer-green" : "timer"
   return (
     <div className={classes}>
-      <span>{minutes}</span>:<span>{seconds}</span>
+      <span>{time}</span>
     </div>
   )
 }
