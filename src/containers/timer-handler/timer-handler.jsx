@@ -11,8 +11,9 @@ export default function TimerHandler() {
     const count = () =>
       setInterval(() => {
         const nowTime = Date.now()
-        const counted = format(endTime - nowTime, "mm:ss")
-        setTime(counted)
+        const remained = endTime - nowTime
+        const formated = format(remained, "mm:ss")
+        setTime(formated)
       }, 1000)
     count()
   }
@@ -20,7 +21,7 @@ export default function TimerHandler() {
   return (
     <div>
       <Timer time={time} />
-      <Button text="eeeeee" onClickFunc={() => counter()} />
+      <Button text="run" onClickFunc={() => counter()} />
     </div>
   )
 }
