@@ -20,7 +20,7 @@ export default function Button(props) {
 
     text: propTypes.string.isRequired,
 
-    onClickFunc: propTypes.string,
+    onClickFunc: propTypes.func,
   }
 
   Button.defaultProps = {
