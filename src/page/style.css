@@ -5,3 +5,18 @@
     align-items: center;
     justify-content: center;
 }
+
+.timer-block{
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    align-items: center;
+    min-width: 320px;
+}
+
+.timer-block__buttons{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}

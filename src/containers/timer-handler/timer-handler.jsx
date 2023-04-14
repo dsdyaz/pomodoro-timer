@@ -24,10 +24,12 @@ export default function TimerHandler() {
   }
 
   return (
-    <div>
+    <div className="timer-block">
       <Timer time={time} />
-      <Button text="run" onClickFunc={() => counter()} />
-      <Button text="stop" secondary />
+      <div className="timer-block__buttons">
+        <Button text="run" onClickFunc={() => counter()} />
+        <Button text="stop" secondary />
+      </div>
     </div>
   )
 }
