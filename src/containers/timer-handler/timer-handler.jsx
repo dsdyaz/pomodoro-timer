@@ -27,6 +27,7 @@ export default function TimerHandler() {
     <div>
       <Timer time={time} />
       <Button text="run" onClickFunc={() => counter()} />
+      <Button text="stop" secondary />
     </div>
   )
 }
