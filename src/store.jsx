@@ -2,8 +2,11 @@ import React from "react"
 import { Provider } from "react-redux"
 import propTypes from "prop-types"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import { reducer as timerReducer } from "./modules/timer"
 
-export const rootReducer = combineReducers({})
+export const rootReducer = combineReducers({
+  timer: timerReducer,
+})
 
 export const store = configureStore({
   reducer: rootReducer,
