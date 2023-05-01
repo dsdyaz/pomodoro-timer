@@ -5,6 +5,7 @@ const initialState = {
   remainingTime: 0,
   isRunning: false,
   rest: false,
+  timerId: null,
 }
 
 const timerSlice = createSlice({
@@ -22,6 +23,9 @@ const timerSlice = createSlice({
     },
     toggleRest(state) {
       state.rest = !state.rest
+    },
+    setId(state, action) {
+      state.timerId = action.payload
     },
   },
 })
