@@ -31,9 +31,7 @@ export default function TimerHandler() {
         dispatch({ type: "timer/recordTime", payload: remaining })
         const formated = format(remaining, "mm:ss")
         setTime(formated)
-        console.log(interval)
         dispatch({ type: "timer/setId", payload: `${interval}` })
-        console.log(timerId)
       }, 1000)
     }
     count()
