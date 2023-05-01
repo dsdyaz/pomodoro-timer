@@ -12,19 +12,25 @@ export default function TimerHandler() {
   const dispatch = useDispatch()
   const isRunning = useSelector(SelectRunning)
   const remainingTime = useSelector(SelectRemainingTime)
+  let interval
   const [time, setTime] = useState("00:00")
   const counter = () => {
+    console.log(isRunning)
     const start = Date.now()
     const endTime = new Date(start + 20 * 60000)
     const count = () => {
-      dispatch({ type: "timer/start" })
-      setInterval(() => {
-        const nowTime = Date.now()
-        const remaining = endTime - nowTime
-        dispatch({ type: "timer/recordTime", payload: remaining })
-        const formated = format(remaining, "mm:ss")
-        setTime(formated)
-      }, 1000)
+      console.log(isRunning)
+      if (isRunning) {
+        interval = setInterval(() => {
+          const nowTime = Date.now()
+          const remaining = endTime - nowTime
+          dispatch({ type: "timer/recordTime", payload: remaining })
+          const formated = format(remaining, "mm:ss")
+          setTime(formated)
+        }, 1000)
+      } else {
+        clearInterval(interval)
+      }
     }
     count()
   }
@@ -32,8 +38,13 @@ export default function TimerHandler() {
   const runButtonFunc = isRunning
     ? () => {
         console.log("its already going")
+        console.log(isRunning)
       }
-    : () => counter()
+    : () => {
+        dispatch({ type: "timer/start" })
+        console.log(isRunning)
+        counter()
+      }
 
   return (
     <div className="timer-block">
