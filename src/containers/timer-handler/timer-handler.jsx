@@ -6,27 +6,16 @@ import Timer from "../../components/timer/timer"
 import {
   SelectRemainingTime,
   SelectRunning,
+  SelectTimerId,
 } from "../../modules/timer/timer.selectors"
 
 export default function TimerHandler() {
   const dispatch = useDispatch()
   const isRunning = useSelector(SelectRunning)
+  const timerId = useSelector(SelectTimerId)
   const remainingTime = useSelector(SelectRemainingTime)
   let interval
   const [time, setTime] = useState("00:00")
-  function timer(running) {
-    interval = setInterval(() => {
-      console.log("isRunning")
-    }, 1000)
-  }
-
-  // useEffect(() => {
-  //   if (isRunning) {
-  //     timer(true)
-  //   } else {
-  //     clearInterval(6)
-  //   }
-  // }, [isRunning])
 
   const counter = () => {
     dispatch({ type: "timer/start" })
@@ -35,38 +24,34 @@ export default function TimerHandler() {
     const endTime = new Date(start + 20 * 60000)
     const count = () => {
       console.log(isRunning)
-      if (isRunning === true) {
-        interval = setInterval(() => {
-          console.log("isRunning")
-          const nowTime = Date.now()
-          const remaining = endTime - nowTime
-          dispatch({ type: "timer/recordTime", payload: remaining })
-          const formated = format(remaining, "mm:ss")
-          setTime(formated)
-          console.log(isRunning)
-          console.log(interval)
-        }, 1000)
-      } else {
+      interval = window.setInterval(() => {
+        console.log("isRunning")
+        const nowTime = Date.now()
+        const remaining = endTime - nowTime
+        dispatch({ type: "timer/recordTime", payload: remaining })
+        const formated = format(remaining, "mm:ss")
+        setTime(formated)
         console.log(interval)
-        clearInterval(interval)
-      }
+        dispatch({ type: "timer/setId", payload: `${interval}` })
+        console.log(timerId)
+      }, 1000)
     }
     count()
   }
 
-  const runButtonFunc = () => {
-    // isRunning
-    //   ? () => {
-    //       console.log("its already going")
-    //       console.log(isRunning)
-    //       counter()
-    //     }
-    //   : () => {
-    dispatch({ type: "timer/start" })
-    dispatch({ type: "timer/start" })
-    console.log(isRunning)
-    counter()
-  }
+  useEffect(() => {
+    if (isRunning) {
+      counter()
+    } else {
+      clearInterval(timerId)
+    }
+  }, [isRunning])
+
+  const runButtonFunc = isRunning
+    ? () => {
+        console.log("its already going")
+      }
+    : () => dispatch({ type: "timer/start" })
 
   return (
     <div className="timer-block">
@@ -77,7 +62,6 @@ export default function TimerHandler() {
           text="stop"
           secondary
           onClickFunc={() => {
-            console.log(interval)
             dispatch({ type: "timer/stop" })
           }}
         />
