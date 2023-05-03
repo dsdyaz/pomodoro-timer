@@ -18,11 +18,11 @@ export default function TimerHandler() {
   const [time, setTime] = useState("00:00")
 
   const counter = () => {
-    dispatch({ type: "timer/start" })
     const start = Date.now()
     const endTime =
-      remainingTime === 0 ? new Date(start + 20 * 60000) : remainingTime
-
+      remainingTime === 0
+        ? new Date(start + 20 * 60000)
+        : new Date(start + remainingTime)
     const count = () => {
       interval = window.setInterval(() => {
         const nowTime = Date.now()
