@@ -46,10 +46,10 @@ export default function TimerHandler() {
   useEffect(() => {
     if (isRunning) {
       counter()
-      if (remainingTime > 0 && remainingTime < 3000) {
+      if (remainingTime > 0 && remainingTime < 2700) {
         console.log(remainingTime)
-        dispatch({ type: "timer/recordTime", payload: 0 })
         dispatch({ type: "timer/stop" })
+        dispatch({ type: "timer/recordTime", payload: 0 })
         // dispatch({ type: "timer/toggleRest" })
         // dispatch({ type: "timer/start" })
       }
