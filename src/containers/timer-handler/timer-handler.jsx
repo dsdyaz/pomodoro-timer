@@ -20,7 +20,9 @@ export default function TimerHandler() {
   const counter = () => {
     dispatch({ type: "timer/start" })
     const start = Date.now()
-    const endTime = new Date(start + 20 * 60000)
+    const endTime =
+      remainingTime === 0 ? new Date(start + 20 * 60000) : remainingTime
+
     const count = () => {
       interval = window.setInterval(() => {
         const nowTime = Date.now()
