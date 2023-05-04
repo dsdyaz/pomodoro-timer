@@ -23,13 +23,6 @@ export default function TimerHandler() {
       remainingTime === 0
         ? new Date(start + 0.2 * 60000)
         : new Date(start + remainingTime)
-    // if (remainingTime < 0) {
-    //   console.log(remainingTime)
-    //   // dispatch({ type: "timer/recordTime", payload: 0 })
-    //   dispatch({ type: "timer/stop" })
-    //   // dispatch({ type: "timer/toggleRest" })
-    //   // dispatch({ type: "timer/start" })
-    // }
     const count = () => {
       interval = window.setInterval(() => {
         const nowTime = Date.now()
@@ -46,23 +39,24 @@ export default function TimerHandler() {
   useEffect(() => {
     if (isRunning) {
       counter()
-      if (remainingTime > 0 && remainingTime < 2700) {
-        console.log(remainingTime)
-        dispatch({ type: "timer/stop" })
-        dispatch({ type: "timer/recordTime", payload: 0 })
-        // dispatch({ type: "timer/toggleRest" })
-        // dispatch({ type: "timer/start" })
-      }
     } else {
       clearInterval(timerId)
     }
-  }, [isRunning, remainingTime])
+  }, [isRunning])
 
   const runButtonFunc = isRunning
     ? () => {
         console.log("its already going")
       }
     : () => dispatch({ type: "timer/start" })
+
+  if (remainingTime > 0 && remainingTime <= 1000) {
+    console.log(remainingTime)
+    dispatch({ type: "timer/stop" })
+    dispatch({ type: "timer/recordTime", payload: 0 })
+    // dispatch({ type: "timer/toggleRest" })
+    // dispatch({ type: "timer/start" })
+  }
 
   return (
     <div className="timer-block">
