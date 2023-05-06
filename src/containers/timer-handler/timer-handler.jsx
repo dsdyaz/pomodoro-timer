@@ -17,31 +17,27 @@ export default function TimerHandler() {
   let interval
   const [time, setTime] = useState("00:00")
 
-  const counter = () => {
-    const start = Date.now()
-    const endTime =
-      remainingTime === 0
-        ? new Date(start + 20 * 60000)
-        : new Date(start + remainingTime)
-    const count = () => {
-      interval = window.setInterval(() => {
-        const nowTime = Date.now()
-        const remaining = endTime - nowTime
-        dispatch({ type: "timer/recordTime", payload: remaining })
-        const formated = format(remaining, "mm:ss")
-        setTime(formated)
-        dispatch({ type: "timer/setId", payload: `${interval}` })
-      }, 1000)
-    }
-    count()
+  if (remainingTime > 0 && remainingTime <= 1000) {
+    dispatch({ type: "timer/stop" })
+    dispatch({ type: "timer/recordTime", payload: 0 })
+    dispatch({ type: "timer/toggleRest" })
   }
 
   useEffect(() => {
-    if (isRunning) {
-      counter()
-    } else {
-      clearInterval(timerId)
-    }
+    const start = Date.now()
+    const endTime =
+      remainingTime === 0
+        ? new Date(start + 0.2 * 60000)
+        : new Date(start + remainingTime)
+
+    interval = window.setInterval(() => {
+      const nowTime = Date.now()
+      const remaining = endTime - nowTime
+      dispatch({ type: "timer/recordTime", payload: remaining })
+      const formated = format(remaining, "mm:ss")
+      setTime(formated)
+      dispatch({ type: "timer/setId", payload: `${interval}` })
+    }, 1000)
   }, [isRunning])
 
   const runButtonFunc = isRunning
