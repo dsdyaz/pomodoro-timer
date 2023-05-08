@@ -14,43 +14,38 @@ export default function TimerHandler() {
   const isRunning = useSelector(SelectRunning)
   const timerId = useSelector(SelectTimerId)
   const remainingTime = useSelector(SelectRemainingTime)
-  let interval
-  const [time, setTime] = useState("00:00")
 
   if (remainingTime > 0 && remainingTime <= 1000) {
     dispatch({ type: "timer/stop" })
     dispatch({ type: "timer/recordTime", payload: 0 })
     dispatch({ type: "timer/toggleRest" })
   }
-
+  const [timeAmount, setTimeAmount] = useState(0)
+  const [running, setRunning] = useState(false)
   useEffect(() => {
-    const start = Date.now()
-    const endTime =
-      remainingTime === 0
-        ? new Date(start + 0.2 * 60000)
-        : new Date(start + remainingTime)
-
-    interval = window.setInterval(() => {
-      const nowTime = Date.now()
-      const remaining = endTime - nowTime
-      dispatch({ type: "timer/recordTime", payload: remaining })
-      const formated = format(remaining, "mm:ss")
-      setTime(formated)
-      dispatch({ type: "timer/setId", payload: `${interval}` })
-    }, 1000)
+    if (isRunning) {
+      setTimeAmount(6000)
+      setRunning(true)
+    } else {
+      setRunning(false)
+    }
+    console.log(timeAmount)
   }, [isRunning])
 
   const runButtonFunc = isRunning
     ? () => {
         console.log("its already going")
       }
-    : () => dispatch({ type: "timer/start" })
+    : () => {
+        dispatch({ type: "timer/start" })
+      }
 
   return (
     <div className="timer-block">
-      <Timer time={time} />
+      <Timer time={timeAmount} isRunning={running} />
       <div className="timer-block__buttons">
         <Button text="run" onClickFunc={() => runButtonFunc()} />
+        <Button text={`${timeAmount}`} />
         <Button
           text="stop"
           secondary
