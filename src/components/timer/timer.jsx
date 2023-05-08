@@ -18,22 +18,24 @@ export default function Timer(props) {
   Timer.defaultProps = {
     isGreen: false,
   }
+
   const classes = isGreen ? "timer timer-green" : "timer"
+
+  const [displayedTime, setDisplayedTime] = useState(0)
   let remaining = time
   useEffect(() => {
     const decreaseTimer = () => {
       const subtrahend = isRunning && remaining > 0 ? 1000 : 0
       remaining -= subtrahend
-      console.log(remaining)
+      setDisplayedTime(remaining)
     }
     const countdown = setInterval(decreaseTimer, 1000)
     return () => clearInterval(countdown)
-  }, [time, isRunning])
+  }, [isRunning])
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className={classes}>
-      <span>{`${format(remaining, "mm:ss")}`}</span>
+      <span>{`${format(displayedTime, "mm:ss")}`}</span>
     </div>
   )
 }
