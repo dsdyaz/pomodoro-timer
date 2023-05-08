@@ -14,21 +14,20 @@ export default function TimerHandler() {
   const isRunning = useSelector(SelectRunning)
   const timerId = useSelector(SelectTimerId)
   const remainingTime = useSelector(SelectRemainingTime)
-  let interval
 
   if (remainingTime > 0 && remainingTime <= 1000) {
     dispatch({ type: "timer/stop" })
     dispatch({ type: "timer/recordTime", payload: 0 })
     dispatch({ type: "timer/toggleRest" })
   }
-  const [time, setTime] = useState(0)
+  const [timeAmount, setTimeAmount] = useState(0)
+  const [running, setRunning] = useState(false)
   useEffect(() => {
     if (isRunning) {
-      setTime(6000)
-    } else {
-      setTime(0)
+      setTimeAmount(6000)
+      setRunning(true)
     }
-    console.log(time)
+    console.log(timeAmount)
   }, [isRunning])
 
   const runButtonFunc = isRunning
@@ -37,15 +36,14 @@ export default function TimerHandler() {
       }
     : () => {
         dispatch({ type: "timer/start" })
-        setTime(6000)
       }
 
   return (
     <div className="timer-block">
-      <Timer time={time} />
+      <Timer time={timeAmount} isRunning={running} />
       <div className="timer-block__buttons">
         <Button text="run" onClickFunc={() => runButtonFunc()} />
-        <Button text={`${time}`} />
+        <Button text={`${timeAmount}`} />
         <Button
           text="stop"
           secondary

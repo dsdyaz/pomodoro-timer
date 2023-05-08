@@ -1,40 +1,39 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from "react"
 import propTypes from "prop-types"
 import "./timer.css"
 import { format } from "fecha"
 
 export default function Timer(props) {
-  const { time, isGreen } = props
+  const { time, isRunning, isGreen } = props
 
   Timer.propTypes = {
-    time: propTypes.number,
+    time: propTypes.number.isRequired,
 
     isGreen: propTypes.bool,
+
+    isRunning: propTypes.bool.isRequired,
   }
 
   Timer.defaultProps = {
-    time: 0,
     isGreen: false,
   }
   const classes = isGreen ? "timer timer-green" : "timer"
-
-  const [timer, setTimer] = useState(time)
-  console.log(time)
-  const decreaseTimer = () => {
-    setTimer(timer - 1000)
-  }
-
+  let remaining = time
   useEffect(() => {
-    if (timer <= 0) {
-      return undefined
+    const decreaseTimer = () => {
+      const subtrahend = isRunning && remaining > 0 ? 1000 : 0
+      remaining -= subtrahend
+      console.log(remaining)
     }
     const countdown = setInterval(decreaseTimer, 1000)
     return () => clearInterval(countdown)
-  }, [decreaseTimer, timer])
+  }, [time, isRunning])
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className={classes}>
-      <span>{format(timer, "mm:ss")}</span>
+      <span>{`${format(remaining, "mm:ss")}`}</span>
     </div>
   )
 }
