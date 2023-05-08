@@ -26,6 +26,8 @@ export default function TimerHandler() {
     if (isRunning) {
       setTimeAmount(6000)
       setRunning(true)
+    } else {
+      setRunning(false)
     }
     console.log(timeAmount)
   }, [isRunning])

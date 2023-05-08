@@ -22,6 +22,7 @@ export default function Timer(props) {
   const classes = isGreen ? "timer timer-green" : "timer"
 
   const [displayedTime, setDisplayedTime] = useState(0)
+  const countTime = time
   let remaining = time
   useEffect(() => {
     const decreaseTimer = () => {
