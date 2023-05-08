@@ -1,0 +1,18 @@
+.message {
+    width: 80%;
+    height: fit-content;
+    background-color: #FD8C06;
+    color: #0A1A27;
+    padding: 50px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 60px;
+    font-weight: bolder;
+    font-size: 40px;
+}
+
+.message_green {
+    background-color: #369188;
+    color: whitesmoke;
+}
