@@ -22,16 +22,20 @@ export default function Timer(props) {
   const classes = isGreen ? "timer timer-green" : "timer"
 
   const [displayedTime, setDisplayedTime] = useState(0)
-  const countTime = time
-  let remaining = time
+
   useEffect(() => {
-    const decreaseTimer = () => {
-      const subtrahend = isRunning && remaining > 0 ? 1000 : 0
-      remaining -= subtrahend
-      setDisplayedTime(remaining)
-    }
-    const countdown = setInterval(decreaseTimer, 1000)
-    return () => clearInterval(countdown)
+    setDisplayedTime(time)
+  }, [time])
+
+  useEffect(() => {
+    const interval =
+      isRunning &&
+      setInterval(() => {
+        const subtrahend = isRunning && displayedTime > 0 ? 1000 : 0
+        const newDisplayedTime = displayedTime - subtrahend
+        setDisplayedTime(newDisplayedTime)
+      }, 1000)
+    return () => clearInterval(interval)
   }, [isRunning])
 
   return (
