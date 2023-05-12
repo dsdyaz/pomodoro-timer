@@ -21,22 +21,25 @@ export default function Timer(props) {
 
   const classes = isGreen ? "timer timer-green" : "timer"
 
-  const [displayedTime, setDisplayedTime] = useState(0)
+  const [displayedTime, setDisplayedTime] = useState(1)
 
   useEffect(() => {
     setDisplayedTime(time)
+    console.log(displayedTime)
   }, [time])
 
   useEffect(() => {
+    console.log(`${isRunning} ${time} ${displayedTime}`)
     const interval =
       isRunning &&
       setInterval(() => {
-        const subtrahend = isRunning && displayedTime > 0 ? 1000 : 0
-        const newDisplayedTime = displayedTime - subtrahend
+        const newDisplayedTime = displayedTime - (displayedTime > 0 ? 1000 : 0)
+        console.log(newDisplayedTime)
         setDisplayedTime(newDisplayedTime)
       }, 1000)
+    console.log(interval)
     return () => clearInterval(interval)
-  }, [isRunning])
+  }, [isRunning, displayedTime])
 
   return (
     <div className={classes}>

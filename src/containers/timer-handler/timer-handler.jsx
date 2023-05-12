@@ -22,15 +22,6 @@ export default function TimerHandler() {
   }
   const [timeAmount, setTimeAmount] = useState(0)
   const [running, setRunning] = useState(false)
-  useEffect(() => {
-    if (isRunning) {
-      setTimeAmount(6000)
-      setRunning(true)
-    } else {
-      setRunning(false)
-    }
-    console.log(timeAmount)
-  }, [isRunning])
 
   const runButtonFunc = isRunning
     ? () => {
@@ -38,6 +29,8 @@ export default function TimerHandler() {
       }
     : () => {
         dispatch({ type: "timer/start" })
+        setTimeAmount(6000)
+        setRunning(true)
       }
 
   return (
