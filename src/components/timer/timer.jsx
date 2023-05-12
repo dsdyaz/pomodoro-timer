@@ -5,23 +5,24 @@ import "./timer.css"
 import { format } from "fecha"
 
 export default function Timer(props) {
-  const { time, isRunning, isGreen } = props
+  const { time, isRunning, isRest } = props
 
   Timer.propTypes = {
     time: propTypes.number.isRequired,
 
-    isGreen: propTypes.bool,
+    isRest: propTypes.bool,
 
     isRunning: propTypes.bool.isRequired,
   }
 
   Timer.defaultProps = {
-    isGreen: false,
+    isRest: false,
   }
 
-  const classes = isGreen ? "timer timer-green" : "timer"
-
   const [displayedTime, setDisplayedTime] = useState(1)
+  const [isGreen, setGreen] = useState(false)
+
+  const classes = isGreen ? "timer timer-green" : "timer"
 
   useEffect(() => {
     setDisplayedTime(time)
@@ -36,6 +37,10 @@ export default function Timer(props) {
         const newDisplayedTime = displayedTime - (displayedTime > 0 ? 1000 : 0)
         console.log(newDisplayedTime)
         setDisplayedTime(newDisplayedTime)
+        if (displayedTime > 0 && displayedTime < 1001) {
+          setGreen(!isGreen)
+          setDisplayedTime(6000)
+        }
       }, 1000)
     return () => clearInterval(interval)
   }, [isRunning, displayedTime])
