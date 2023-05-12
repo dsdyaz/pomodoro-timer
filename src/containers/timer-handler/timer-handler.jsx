@@ -37,7 +37,6 @@ export default function TimerHandler() {
       <Timer time={timeAmount} isRunning={running} />
       <div className="timer-block__buttons">
         <Button text="run" onClickFunc={() => runButtonFunc()} />
-        <Button text={`${timeAmount}`} />
         <Button
           text="stop"
           secondary
