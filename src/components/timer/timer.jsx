@@ -41,12 +41,10 @@ export default function Timer(props) {
   }
 
   useEffect(() => {
-    console.log(`${isRunning} ${time} ${displayedTime}`)
     const interval =
       isRunning &&
       setInterval(() => {
         const newDisplayedTime = displayedTime - (displayedTime > 0 ? 1000 : 0)
-        console.log(newDisplayedTime)
         setDisplayedTime(newDisplayedTime)
         if (displayedTime > 0 && displayedTime < 1001) {
           setGreen(!isGreen)
