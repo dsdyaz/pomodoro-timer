@@ -28,7 +28,6 @@ export default function TimerHandler() {
         console.log("its already going")
       }
     : () => {
-        dispatch({ type: "timer/start" })
         setTimeAmount(6000)
         setRunning(true)
       }
@@ -43,7 +42,7 @@ export default function TimerHandler() {
           text="stop"
           secondary
           onClickFunc={() => {
-            dispatch({ type: "timer/stop" })
+            setRunning(false)
           }}
         />
       </div>

@@ -37,7 +37,6 @@ export default function Timer(props) {
         console.log(newDisplayedTime)
         setDisplayedTime(newDisplayedTime)
       }, 1000)
-    console.log(interval)
     return () => clearInterval(interval)
   }, [isRunning, displayedTime])
 
