@@ -29,6 +29,33 @@ export default function Timer(props) {
     console.log(displayedTime)
   }, [time])
 
+  const audioCtx = new (window.AudioContext ||
+    window.WebkitAudioContext ||
+    window.AudioContext)()
+  function beep(duration, frequency, volume, type, callback) {
+    const oscillator = audioCtx.createOscillator()
+    const gainNode = audioCtx.createGain()
+
+    oscillator.connect(gainNode)
+    gainNode.connect(audioCtx.destination)
+
+    if (volume) {
+      gainNode.gain.value = volume
+    }
+    if (frequency) {
+      oscillator.frequency.value = frequency
+    }
+    if (type) {
+      oscillator.type = type
+    }
+    if (callback) {
+      oscillator.onended = callback
+    }
+
+    oscillator.start(audioCtx.currentTime)
+    oscillator.stop(audioCtx.currentTime + (duration || 500) / 1000)
+  }
+
   useEffect(() => {
     console.log(`${isRunning} ${time} ${displayedTime}`)
     const interval =
@@ -39,6 +66,7 @@ export default function Timer(props) {
         setDisplayedTime(newDisplayedTime)
         if (displayedTime > 0 && displayedTime < 1001) {
           setGreen(!isGreen)
+          beep()
           setDisplayedTime(6000)
         }
       }, 1000)
