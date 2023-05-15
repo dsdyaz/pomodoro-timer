@@ -1,41 +1,58 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from "react"
 import propTypes from "prop-types"
 import "./timer.css"
 import { format } from "fecha"
+import Message from "../message/message"
 
 export default function Timer(props) {
-  const { time, isRunning, isGreen } = props
+  const { time, isRunning } = props
 
   Timer.propTypes = {
     time: propTypes.number.isRequired,
 
-    isGreen: propTypes.bool,
-
     isRunning: propTypes.bool.isRequired,
   }
 
-  Timer.defaultProps = {
-    isGreen: false,
+  const [displayedTime, setDisplayedTime] = useState(1)
+  const [isRest, setRest] = useState(false)
+
+  const classes = isRest ? "timer timer-green" : "timer"
+
+  useEffect(() => {
+    setDisplayedTime(time)
+    console.log(displayedTime)
+  }, [time])
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+  function beep() {
+    const oscillator = audioCtx.createOscillator()
+
+    oscillator.type = "sine"
+    oscillator.frequency.setValueAtTime(369.99, audioCtx.currentTime)
+    oscillator.connect(audioCtx.destination)
+    oscillator.start(audioCtx.currentTime)
+    oscillator.stop(audioCtx.currentTime + 500 / 1000)
   }
 
-  const classes = isGreen ? "timer timer-green" : "timer"
-
-  const [displayedTime, setDisplayedTime] = useState(0)
-  const countTime = time
-  let remaining = time
   useEffect(() => {
-    const decreaseTimer = () => {
-      const subtrahend = isRunning && remaining > 0 ? 1000 : 0
-      remaining -= subtrahend
-      setDisplayedTime(remaining)
-    }
-    const countdown = setInterval(decreaseTimer, 1000)
-    return () => clearInterval(countdown)
-  }, [isRunning])
+    const interval =
+      isRunning &&
+      setInterval(() => {
+        const newDisplayedTime = displayedTime - (displayedTime > 0 ? 1000 : 0)
+        setDisplayedTime(newDisplayedTime)
+        if (displayedTime > 0 && displayedTime < 1001) {
+          setRest(!isRest)
+          beep()
+          setTimeout(() => beep(), 800)
+          setDisplayedTime(6000)
+        }
+      }, 1000)
+    return () => clearInterval(interval)
+  }, [isRunning, displayedTime])
 
   return (
     <div className={classes}>
+      <Message text={`${isRest ? "rest" : "work"} time!!`} isGreen={isRest} />
       <span>{`${format(displayedTime, "mm:ss")}`}</span>
     </div>
   )
