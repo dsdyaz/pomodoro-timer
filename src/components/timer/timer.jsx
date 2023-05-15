@@ -3,6 +3,7 @@ import propTypes from "prop-types"
 import "./timer.css"
 import { format } from "fecha"
 import Message from "../message/message"
+import beep from "../../external_func/beep"
 
 export default function Timer(props) {
   const { time, isRunning } = props
@@ -13,26 +14,14 @@ export default function Timer(props) {
     isRunning: propTypes.bool.isRequired,
   }
 
-  const [displayedTime, setDisplayedTime] = useState(1)
+  const [displayedTime, setDisplayedTime] = useState(0)
   const [isRest, setRest] = useState(false)
 
   const classes = isRest ? "timer timer-green" : "timer"
 
   useEffect(() => {
     setDisplayedTime(time)
-    console.log(displayedTime)
   }, [time])
-
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
-  function beep() {
-    const oscillator = audioCtx.createOscillator()
-
-    oscillator.type = "sine"
-    oscillator.frequency.setValueAtTime(369.99, audioCtx.currentTime)
-    oscillator.connect(audioCtx.destination)
-    oscillator.start(audioCtx.currentTime)
-    oscillator.stop(audioCtx.currentTime + 500 / 1000)
-  }
 
   useEffect(() => {
     const interval =
