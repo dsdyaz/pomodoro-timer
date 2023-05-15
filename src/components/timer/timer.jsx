@@ -14,14 +14,13 @@ export default function Timer(props) {
     isRunning: propTypes.bool.isRequired,
   }
 
-  const [displayedTime, setDisplayedTime] = useState(1)
+  const [displayedTime, setDisplayedTime] = useState(0)
   const [isRest, setRest] = useState(false)
 
   const classes = isRest ? "timer timer-green" : "timer"
 
   useEffect(() => {
     setDisplayedTime(time)
-    console.log(displayedTime)
   }, [time])
 
   useEffect(() => {
