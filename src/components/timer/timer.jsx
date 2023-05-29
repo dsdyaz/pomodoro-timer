@@ -16,12 +16,23 @@ export default function Timer(props) {
 
   const [displayedTime, setDisplayedTime] = useState(0)
   const [isRest, setRest] = useState(false)
+  const [cycleCount, setCycleCount] = useState(1)
 
   const classes = isRest ? "timer timer-green" : "timer"
 
   useEffect(() => {
     setDisplayedTime(time)
   }, [time])
+
+  function finishRound(rest) {
+    if (rest) {
+      setDisplayedTime(6000)
+      setCycleCount(cycleCount + 1)
+      console.log(cycleCount)
+    } else {
+      setCycleCount(10000)
+    }
+  }
 
   useEffect(() => {
     const interval =
@@ -33,7 +44,7 @@ export default function Timer(props) {
           setRest(!isRest)
           beep()
           setTimeout(() => beep(), 800)
-          setDisplayedTime(6000)
+          finishRound(isRest)
         }
       }, 1000)
     return () => clearInterval(interval)
