@@ -29,7 +29,6 @@ export default function Timer(props) {
     setDisplayedTime(rest ? 10000 : restTime)
     const restCount = cycleCount === 4 ? 1 : cycleCount + 0
     setCycleCount(rest ? cycleCount + 0 : restCount)
-    console.log(cycleCount)
   }
 
   useEffect(() => {
