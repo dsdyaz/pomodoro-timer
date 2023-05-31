@@ -13,3 +13,9 @@
 .timer-green{
     color: #369188;
 }
+
+@media (max-width: 370px) {
+  .timer {
+    font-size: 100px;
+  }
+}
