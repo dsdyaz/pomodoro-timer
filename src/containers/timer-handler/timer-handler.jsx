@@ -11,7 +11,7 @@ export default function TimerHandler() {
         console.log("its already going")
       }
     : () => {
-        setTimeAmount(6000)
+        setTimeAmount(20 * 60 * 1000)
         setRunning(true)
       }
 
