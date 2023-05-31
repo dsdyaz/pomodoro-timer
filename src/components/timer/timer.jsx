@@ -25,8 +25,8 @@ export default function Timer(props) {
   }, [time])
 
   function finishRound(rest) {
-    const restTime = cycleCount === 4 ? 10000 : 6000
-    setDisplayedTime(rest ? 10000 : restTime)
+    const restTime = cycleCount === 4 ? 20 * 60 * 1000 : 5 * 60 * 1000
+    setDisplayedTime(rest ? 20 * 60 * 1000 : restTime)
     const restCount = cycleCount === 4 ? 1 : cycleCount + 0
     setCycleCount(rest ? cycleCount + 0 : restCount)
   }
