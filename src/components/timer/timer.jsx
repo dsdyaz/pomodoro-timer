@@ -25,13 +25,11 @@ export default function Timer(props) {
   }, [time])
 
   function finishRound(rest) {
-    if (rest) {
-      setDisplayedTime(6000)
-      setCycleCount(cycleCount + 1)
-      console.log(cycleCount)
-    } else {
-      setCycleCount(10000)
-    }
+    const restTime = cycleCount === 4 ? 10000 : 6000
+    setDisplayedTime(rest ? 10000 : restTime)
+    const restCount = cycleCount === 4 ? 1 : cycleCount + 0
+    setCycleCount(rest ? cycleCount + 0 : restCount)
+    console.log(cycleCount)
   }
 
   useEffect(() => {
@@ -42,9 +40,9 @@ export default function Timer(props) {
         setDisplayedTime(newDisplayedTime)
         if (displayedTime > 0 && displayedTime < 1001) {
           setRest(!isRest)
+          finishRound(isRest)
           beep()
           setTimeout(() => beep(), 800)
-          finishRound(isRest)
         }
       }, 1000)
     return () => clearInterval(interval)
