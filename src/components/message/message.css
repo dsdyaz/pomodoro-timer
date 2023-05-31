@@ -22,3 +22,9 @@
     background-color: #369188;
     color: whitesmoke;
 }
+
+@media (max-width: 370px) {
+  .message {
+    font-size: 30px;
+  }
+}
